@@ -1,0 +1,52 @@
+html {
+  box-sizing: border-box;
+}
+
+*, *::before, *::after {
+  box-sizing: inherit;
+  color: inherit;
+  font: inherit;
+}
+
+body {
+  margin: 0;
+}
+
+.page-container {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  width: 420px;
+  height: 420px;
+  /* border: solid black; */
+}
+
+.grid div {
+  width: 15px;
+  height: 15px;
+  background: blue;
+  /* border: 1px solid white; */
+}
+
+.pac-dot {
+  background-color: green;
+  border: 5px solid white;
+}
+
+.wall {
+  background: blue;
+}
+
+.power-pellet {
+  background: green;
+  border-radius: 50%;
+}
+
+.pacman {
+  background: yellow;
+  border-radius: 50%;
+}
