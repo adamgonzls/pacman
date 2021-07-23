@@ -28,8 +28,11 @@ body {
 .grid div {
   width: 15px;
   height: 15px;
-  background: blue;
   /* border: 1px solid white; */
+}
+
+.square {
+  border: 1px solid black;
 }
 
 .pac-dot {
@@ -47,6 +50,7 @@ body {
 }
 
 .pacman {
-  background: yellow;
+  background: orange;
   border-radius: 50%;
+  border: none;
 }
