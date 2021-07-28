@@ -162,6 +162,7 @@ function control (e) {
   }
   squares[pacmanCurrentIndex].classList.add('pacman')
   pacDotEaten()
+  powerPelletEaten()
   console.log(pacmanCurrentIndex)
 }
 
@@ -173,6 +174,25 @@ function pacDotEaten () {
     score++
     scoreDisplay.textContent = score
   }
+}
+
+function powerPelletEaten () {
+  if (squares[pacmanCurrentIndex].classList.contains('power-pellet')) {
+    squares[pacmanCurrentIndex].classList.remove('power-pellet')
+    score += 10
+    scoreDisplay.textContent = score
+    ghosts.forEach(ghost => {
+      ghost.isScared = true
+      console.log(ghost)
+    })
+    setTimeout(unScareGhosts, 10000)
+  }
+}
+
+function unScareGhosts () {
+  ghosts.forEach(ghost => {
+    ghost.isScared = false
+  })
 }
 
 class Ghost {
@@ -210,12 +230,34 @@ function moveGhost (ghost) {
       !squares[ghost.currentIndex + direction].classList.contains('wall') &&
       !squares[ghost.currentIndex + direction].classList.contains('ghost')) {
       squares[ghost.currentIndex].classList.remove(ghost.className)
-      squares[ghost.currentIndex].classList.remove('ghost')
+      squares[ghost.currentIndex].classList.remove('ghost', 'scared-ghost')
       ghost.currentIndex += direction
       squares[ghost.currentIndex].classList.add(ghost.className)
       squares[ghost.currentIndex].classList.add('ghost')
     } else {
       direction = directions[Math.floor(Math.random() * directions.length)]
     }
+
+    if (ghost.isScared) {
+      squares[ghost.currentIndex].classList.add('scared-ghost')
+    }
+
+    // if ghost is currently scared and pacman is on it
+    if (ghost.isScared && squares[ghost.currentIndex].classList.contains('pacman')) {
+      squares[ghost.currentIndex].classList.remove(ghost.className, 'ghost', 'scared-ghost')
+      score += 100
+      ghost.currentIndex = ghost.startIndex
+      squares[ghost.currentIndex].classList.add(ghost.className, 'ghost')
+    }
   }, ghost.speed)
+}
+
+function checkGameOver () {
+  // if square pacman is in contains a ghost and the square does not contain a scared ghost
+
+  // for each ghost - we need to stop it moving
+
+  // remove event listener from our control function
+
+  // tell user the game is over
 }
