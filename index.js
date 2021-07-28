@@ -59,38 +59,71 @@ function createBoard () {
 createBoard()
 
 // starting position of pacman
-const pacmanCurrentIndex = 490
-
+let pacmanCurrentIndex = 490
 squares[pacmanCurrentIndex].classList.add('pacman')
 
 function control (e) {
+  squares[pacmanCurrentIndex].classList.remove('pacman')
   switch (e.key) {
     case 'Down':
       console.log('pressed down')
+      if (!squares[pacmanCurrentIndex + width].classList.contains('wall') && pacmanCurrentIndex + width < width * width) {
+        pacmanCurrentIndex += width
+      }
       break
     case 'ArrowDown':
       console.log('pressed down')
+      if (!squares[pacmanCurrentIndex + width].classList.contains('wall') && pacmanCurrentIndex + width < width * width) {
+        pacmanCurrentIndex += width
+      }
       break
     case 'Up':
       console.log('pressed up')
+      if (
+        !squares[pacmanCurrentIndex - width].classList.contains('wall') &&
+        pacmanCurrentIndex - width >= 0) {
+        pacmanCurrentIndex -= width
+      }
       break
     case 'ArrowUp':
       console.log('pressed up')
+      if (
+        !squares[pacmanCurrentIndex - width].classList.contains('wall') &&
+        pacmanCurrentIndex - width >= 0) {
+        pacmanCurrentIndex -= width
+      }
       break
     case 'Left':
       console.log('pressed left')
+      if (
+        !squares[pacmanCurrentIndex - 1].classList.contains('wall') &&
+        pacmanCurrentIndex % width !== 0) { pacmanCurrentIndex -= 1 }
       break
     case 'ArrowLeft':
-      console.log('pressed left')
+      if (
+        !squares[pacmanCurrentIndex - 1].classList.contains('wall') &&
+        pacmanCurrentIndex % width !== 0) { pacmanCurrentIndex -= 1 }
       break
     case 'Right':
       console.log('pressed right')
+      if (
+        !squares[pacmanCurrentIndex + 1].classList.contains('wall') &&
+        pacmanCurrentIndex % width < width - 1) {
+        pacmanCurrentIndex += 1
+      }
       break
     case 'ArrowRight':
       console.log('pressed right')
+      if (
+        !squares[pacmanCurrentIndex + 1].classList.contains('wall') &&
+        pacmanCurrentIndex % width < width - 1) {
+        pacmanCurrentIndex += 1
+      }
       break
     default:
   }
+  squares[pacmanCurrentIndex].classList.add('pacman')
+  console.log(pacmanCurrentIndex)
 }
 
 document.addEventListener('keyup', control)
