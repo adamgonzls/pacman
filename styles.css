@@ -54,3 +54,23 @@ body {
   border-radius: 50%;
   border: none;
 }
+
+.blinky {
+  background: red;
+  border: none;
+}
+
+.pinky {
+  background: pink;
+  border: none;
+}
+
+.inky {
+  background: cyan;
+  border: none;
+}
+
+.clyde {
+  background: orange;
+  border: none;
+}
