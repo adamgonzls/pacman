@@ -69,7 +69,6 @@ function control (e) {
   squares[pacmanCurrentIndex].classList.remove('pacman')
   switch (e.key) {
     case 'Down':
-      console.log('pressed down')
       if (
         !squares[pacmanCurrentIndex + width].classList.contains('wall') &&
         !squares[pacmanCurrentIndex + width].classList.contains('ghost-lair') &&
@@ -78,7 +77,6 @@ function control (e) {
       }
       break
     case 'ArrowDown':
-      console.log('pressed down')
       if (
         !squares[pacmanCurrentIndex + width].classList.contains('wall') &&
         !squares[pacmanCurrentIndex + width].classList.contains('ghost-lair') &&
@@ -88,7 +86,6 @@ function control (e) {
       }
       break
     case 'Up':
-      console.log('pressed up')
       if (
         !squares[pacmanCurrentIndex - width].classList.contains('wall') &&
         !squares[pacmanCurrentIndex - width].classList.contains('ghost-lair') &&
@@ -98,7 +95,6 @@ function control (e) {
       }
       break
     case 'ArrowUp':
-      console.log('pressed up')
       if (
         !squares[pacmanCurrentIndex - width].classList.contains('wall') &&
         !squares[pacmanCurrentIndex - width].classList.contains('ghost-lair') &&
@@ -108,7 +104,6 @@ function control (e) {
       }
       break
     case 'Left':
-      console.log('pressed left')
       if (
         !squares[pacmanCurrentIndex - 1].classList.contains('wall') &&
         !squares[pacmanCurrentIndex - 1].classList.contains('ghost-lair') &&
@@ -133,7 +128,6 @@ function control (e) {
       }
       break
     case 'Right':
-      console.log('pressed right')
       if (
         !squares[pacmanCurrentIndex + 1].classList.contains('wall') &&
         !squares[pacmanCurrentIndex + 1].classList.contains('ghost-lair') &&
@@ -146,7 +140,6 @@ function control (e) {
       }
       break
     case 'ArrowRight':
-      console.log('pressed right')
       if (
         !squares[pacmanCurrentIndex + 1].classList.contains('wall') &&
         !squares[pacmanCurrentIndex + 1].classList.contains('ghost-lair') &&
@@ -163,7 +156,7 @@ function control (e) {
   squares[pacmanCurrentIndex].classList.add('pacman')
   pacDotEaten()
   powerPelletEaten()
-  console.log(pacmanCurrentIndex)
+  checkForWin()
 }
 
 document.addEventListener('keyup', control)
@@ -183,7 +176,6 @@ function powerPelletEaten () {
     scoreDisplay.textContent = score
     ghosts.forEach(ghost => {
       ghost.isScared = true
-      console.log(ghost)
     })
     setTimeout(unScareGhosts, 10000)
   }
@@ -221,7 +213,6 @@ ghosts.forEach(ghost => {
 ghosts.forEach(ghost => moveGhost(ghost))
 
 function moveGhost (ghost) {
-  console.log('moved ghost')
   const directions = [-1, +1, -width, +width]
   let direction = directions[Math.floor(Math.random() * directions.length)]
 
@@ -249,15 +240,26 @@ function moveGhost (ghost) {
       ghost.currentIndex = ghost.startIndex
       squares[ghost.currentIndex].classList.add(ghost.className, 'ghost')
     }
+    checkGameOver()
   }, ghost.speed)
 }
 
 function checkGameOver () {
-  // if square pacman is in contains a ghost and the square does not contain a scared ghost
+  if (squares[pacmanCurrentIndex].classList.contains('ghost') && !squares[pacmanCurrentIndex].classList.contains('scared-ghost')) {
+    ghosts.forEach(ghost => {
+      clearInterval(ghost.timerId)
+    })
+    document.removeEventListener('keyup', control)
+    scoreDisplay.textContent = 'GAME OVER'
+  }
+}
 
-  // for each ghost - we need to stop it moving
-
-  // remove event listener from our control function
-
-  // tell user the game is over
+function checkForWin () {
+  if (score >= 274) {
+    ghosts.forEach(ghost => {
+      clearInterval(ghost.timerId)
+    })
+    document.removeEventListener('keyup', control)
+    scoreDisplay.textContent = 'YOU WIN!'
+  }
 }
